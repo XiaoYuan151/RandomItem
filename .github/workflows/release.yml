@@ -2,8 +2,8 @@ name: Build and Release RandomItem Mod
 
 on:
   push:
-    tags:
-      - '*' # 只有当你推送以 "v" 开头的标签时才会触发此操作
+    branches:
+      - '*'  # 触发所有分支的提交
 
 jobs:
   build:
@@ -52,8 +52,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
           draft: false
           prerelease: false
 
@@ -64,5 +64,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./RandomItem-mod
-          asset_name: RandomItem-mod-${{ github.ref }}.jar
+          asset_name: RandomItem-mod-${{ github.sha }}.jar
           asset_content_type: application/java-archive
