@@ -1,11 +1,5 @@
+/.gradle/
+/.idea/
+/build/
 /gradle/
 /run/
-/src/
-/build.gradle
-/gradle.properties
-/gradlew
-/gradlew.bat
-/LICENSE
-/README.md
-/README_CN.md
-/settings.gradle
