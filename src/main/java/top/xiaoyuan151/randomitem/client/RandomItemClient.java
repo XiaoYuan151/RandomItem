@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
-import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -41,13 +40,17 @@ public class RandomItemClient implements ClientModInitializer {
                 if (countdown > 0 && countdown % 100 == 0) { // Every 5 seconds (100 ticks)
                     int secondsLeft = countdown / 20;
                     if (secondsLeft <= 20 && secondsLeft % 5 == 0) {
-                        MinecraftClient.getInstance().player.sendMessage(new LiteralText("Replacement in " + secondsLeft + " seconds"), false);
+                        if (MinecraftClient.getInstance().player != null) {
+                            MinecraftClient.getInstance().player.sendMessage(new LiteralText("Replacement in " + secondsLeft + " seconds"), false);
+                        }
                     }
                 }
 
                 if (countdown <= 0) {
                     if (!replaceItem()) {
-                        MinecraftClient.getInstance().player.sendMessage(new LiteralText("No item found to replace!"), false);
+                        if (MinecraftClient.getInstance().player != null) {
+                            MinecraftClient.getInstance().player.sendMessage(new LiteralText("No item found to replace!"), false);
+                        }
                     }
                     countdown = randomizeTime; // Reset countdown
                 }
@@ -83,7 +86,9 @@ public class RandomItemClient implements ClientModInitializer {
                         .executes(context -> {
                             isReplacing = true;
                             countdown = 0; // Reset countdown to start immediately
-                            MinecraftClient.getInstance().player.sendMessage(new LiteralText("Starting item replacement!"), false);
+                            if (MinecraftClient.getInstance().player != null) {
+                                MinecraftClient.getInstance().player.sendMessage(new LiteralText("Starting item replacement!"), false);
+                            }
                             return 1;
                         })
         );
@@ -94,7 +99,9 @@ public class RandomItemClient implements ClientModInitializer {
                         .requires(source -> source.hasPermissionLevel(2))
                         .executes(context -> {
                             isReplacing = false;
-                            MinecraftClient.getInstance().player.sendMessage(new LiteralText("Stopping item replacement!"), false);
+                            if (MinecraftClient.getInstance().player != null) {
+                                MinecraftClient.getInstance().player.sendMessage(new LiteralText("Stopping item replacement!"), false);
+                            }
                             return 1;
                         })
         );
@@ -102,7 +109,9 @@ public class RandomItemClient implements ClientModInitializer {
 
     private int setRandomizeTime(CommandContext<net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource> context) {
         int time = IntegerArgumentType.getInteger(context, "time");
-        MinecraftClient.getInstance().player.sendMessage(new LiteralText("Randomize time set to " + time + " seconds."), false);
+        if (MinecraftClient.getInstance().player != null) {
+            MinecraftClient.getInstance().player.sendMessage(new LiteralText("Randomize time set to " + time + " seconds."), false);
+        }
         randomizeTime = time * 20; // Convert seconds to ticks
         countdown = randomizeTime; // Immediately apply new time
         return 1;
