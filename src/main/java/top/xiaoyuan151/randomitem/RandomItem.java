@@ -9,6 +9,6 @@ public class RandomItem implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-        System.out.println("Work in progress!");
+        System.out.println("Developer Build!");
     }
 }
