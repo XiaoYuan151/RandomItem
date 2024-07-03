@@ -9,7 +9,7 @@ public class RandomItem implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-        System.out.println("RandomItem Modded");
-        System.out.println("Made by XiaoYuan151");
+        System.out.println("RandomItem Modded!");
+        System.out.println("Made By XiaoYuan151, Open-Sourced In GitHub!");
     }
 }
