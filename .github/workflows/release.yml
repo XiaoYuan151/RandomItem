@@ -3,7 +3,7 @@ name: Build and Release RandomItem Mod
 on:
   push:
     tags:
-      - 'v*' # 只有当你推送以 "v" 开头的标签时才会触发此操作
+      - '*' # 只有当你推送以 "v" 开头的标签时才会触发此操作
 
 jobs:
   build:
